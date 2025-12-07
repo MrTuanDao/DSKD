@@ -80,6 +80,7 @@ def run_model(args, tokenizer, model, dataset: PromptDataset, epoch, device):
         return_dict_in_generate=True,
         output_scores=True
     )
+    print(generation_config)
 
     with torch.no_grad():
         for it, (model_batch, no_model_batch) in enumerate(tqdm(dataloader, desc=f"Evaluating {args.data_names} ", disable=(dist.get_rank() != 0))):
@@ -179,31 +180,33 @@ def run_model(args, tokenizer, model, dataset: PromptDataset, epoch, device):
         all_response_ids
         )
 
-
+@torch.no_grad()
 def evaluate_main(args, tokenizer, model, dataset: PromptDataset, split, epoch, device):
     lm_loss, query_ids, response_ids = run_model(args, tokenizer, model, dataset, epoch, device)
     query_strs = tokenizer.batch_decode(query_ids, skip_special_tokens=True)
     response_strs = tokenizer.batch_decode(response_ids, skip_special_tokens=True)
     
-    with open(os.path.join(args.save_dir, "preds.txt"), "w", encoding="utf-8") as f:
-        for q, r in zip(query_strs, response_strs):
-            f.write(q.replace("\n", "<n>") + "\t\t" + r.replace("\n", "<n>") + "\n")
+    dataname = args.data_names.replace("/", "_")
+    # with open(os.path.join(args.save_dir, f"preds_{dataname}_{args.seed}.txt"), "w", encoding="utf-8") as f:
+    #     for q, r in zip(query_strs, response_strs):
+    #         f.write(q.replace("\n", "<n>") + "\t\t" + r.replace("\n", "<n>") + "\n")
 
     all_preds = [[]]
     for q, r in zip(query_strs, response_strs):
         all_preds[0].append((q, q + r))
-    torch.save(all_preds, os.path.join(args.save_dir, "preds.pt"))
+    # torch.save(all_preds, os.path.join(args.save_dir, f"preds_{args.seed}.pt"))
 
     all_responses = []
-    with open(os.path.join(args.save_dir, "answers.jsonl"), "w") as f:    
-        for p in all_preds[0]:
+    with open(os.path.join(args.save_dir, f"answers_{dataname}_{args.seed}.jsonl"), "w") as f:    
+        for p, answer in zip(all_preds[0], dataset.answers):
             q, r = p
             r = r[len(q):]
             idx = r.find("<|endoftext|>")
             if idx >= 0:
                 r = r[:idx]
             f.write(json.dumps({
-                "text": r.replace("<n>", "\n").strip()
+                "text": r.replace("<n>", "\n").strip(),
+                "answer": answer
             }) + "\n")
             all_responses.append(r.replace("<n>", "\n").strip())
     
@@ -213,4 +216,4 @@ def evaluate_main(args, tokenizer, model, dataset: PromptDataset, split, epoch, 
 
     log_str = f"{split} | name: {args.data_names} | {gen_res} | lm_loss {round(lm_loss, 4)} | avg. gen lenth: {mean_gen_length} | seed {args.seed}"
     print_rank(log_str)
-    save_rank(log_str, os.path.join(args.save_dir, "log.txt"))
+    save_rank(log_str, os.path.join(args.save_dir, f"log.txt"))
