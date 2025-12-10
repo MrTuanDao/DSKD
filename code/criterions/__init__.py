@@ -4,6 +4,7 @@ from .dual_space_kd import DualSpaceKD
 from .dual_space_kd_with_cross_model_attention import DualSpaceKDWithCMA
 from .universal_logit_distillation import UniversalLogitDistillation
 from .min_edit_dis_kld import MinEditDisForwardKLD
+from .wctkd import WCTKD
 
 
 criterion_list = {
@@ -13,6 +14,7 @@ criterion_list = {
     "dual_space_kd_with_cma": DualSpaceKDWithCMA,
     "universal_logit_distillation": UniversalLogitDistillation,
     "min_edit_dis_kld": MinEditDisForwardKLD,
+    "wtckd": WCTKD
 }
 
 def build_criterion(args):

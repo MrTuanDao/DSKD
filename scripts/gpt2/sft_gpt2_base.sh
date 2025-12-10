@@ -98,7 +98,7 @@ OPTS+=" --temperature 1.0"
 
 
 export NCCL_DEBUG=""
-export WANDB_DISABLED=True
+export WANDB_DISABLED=FALSE
 export TF_CPP_MIN_LOG_LEVEL=3
 export PYTHONPATH=${BASE_PATH}
 CMD="torchrun ${DISTRIBUTED_ARGS} ${BASE_PATH}/code/distillation.py ${OPTS}"
