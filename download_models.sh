@@ -24,7 +24,7 @@ wget https://huggingface.co/openai-community/gpt2/resolve/main/model.safetensors
 
 # # BASE LINES
 # # gpt2-120m
-# hf download HoangTran223/MCW_KD_GPT2_SFT-1 --local-dir models/sft_gpt2-120m/
+hf download HoangTran223/MCW_KD_GPT2_SFT-1 --local-dir MCW_KD_GPT2_SFT-1
 # hf download HoangTran223/MCW_KD_GPT2_ULD --local-dir models/uld_gpt2-120m/
 # hf download HoangTran223/MCW_KD_GPT2_DSKD --local-dir models/dskd_gpt2-120m/
 # hf download HoangTran223/MCW_KD_GPT2_MinED --local-dir models/mined_gpt2-120m/
