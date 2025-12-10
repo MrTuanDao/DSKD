@@ -77,3 +77,4 @@ test | name: sinst/11_ | {'exact_match': 0.0, 'rougeL': 16.8172} | lm_loss 7.013
 
 
 ============================== EXP at 2025-12-10 07:04:16 ==============================
+test | name: sinst/11_ | {'exact_match': 0.0, 'rougeL': 17.2994} | lm_loss 7.0138 | avg. gen lenth: 53.43093270365998 | seed 50
