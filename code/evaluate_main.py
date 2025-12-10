@@ -80,7 +80,6 @@ def run_model(args, tokenizer, model, dataset: PromptDataset, epoch, device):
         return_dict_in_generate=True,
         output_scores=True
     )
-    print(generation_config)
 
     with torch.no_grad():
         for it, (model_batch, no_model_batch) in enumerate(tqdm(dataloader, desc=f"Evaluating {args.data_names} ", disable=(dist.get_rank() != 0))):
@@ -180,7 +179,7 @@ def run_model(args, tokenizer, model, dataset: PromptDataset, epoch, device):
         all_response_ids
         )
 
-@torch.no_grad()
+
 def evaluate_main(args, tokenizer, model, dataset: PromptDataset, split, epoch, device):
     lm_loss, query_ids, response_ids = run_model(args, tokenizer, model, dataset, epoch, device)
     query_strs = tokenizer.batch_decode(query_ids, skip_special_tokens=True)
@@ -216,4 +215,7 @@ def evaluate_main(args, tokenizer, model, dataset: PromptDataset, split, epoch, 
 
     log_str = f"{split} | name: {args.data_names} | {gen_res} | lm_loss {round(lm_loss, 4)} | avg. gen lenth: {mean_gen_length} | seed {args.seed}"
     print_rank(log_str)
-    save_rank(log_str, os.path.join(args.save_dir, f"log.txt"))
+    with open(os.path.join(args.save_dir, "rougeL_results.jsonl"), "a") as f:
+        json.dump({"dataname": dataname, "seed": args.seed, "rougeL": gen_res["rougeL"]}, f)
+        f.write("\n")
+    save_rank(log_str, os.path.join(args.save_dir, "log.txt"))

@@ -1,5 +1,5 @@
 #! /bin/bash
-GPUS=(0 1 2 3)
+GPUS=(0)
 export CUDA_VISIBLE_DEVICES=$(IFS=,; echo "${GPUS[*]}")
 
 MASTER_ADDR=localhost
@@ -15,7 +15,7 @@ DISTRIBUTED_ARGS="--nproc_per_node $GPUS_PER_NODE \
                   --master_port $MASTER_PORT"
 
 # model
-BASE_PATH=path_to_dskd_project
+BASE_PATH=/workspace/DSKD
 CKPT_TYPE="gpt2"
 CKPT_NAME="gpt2-base"
 CKPT_PATH="${BASE_PATH}/model_hub/${CKPT_TYPE}/${CKPT_NAME}"
@@ -37,7 +37,7 @@ CRITERION="cross_entropy"
 CONFIG="default-${PRECISION}"
 SETTING=criterion=${CRITERION}__${CONFIG}__epoch=${EPOCH}__bsz=${BATCH_SIZE}x${GRAD_ACC}x${GPUS_PER_NODE}=$((BATCH_SIZE * GRAD_ACC * GPUS_PER_NODE * NNODES))__lr=${LR}
 SAVE_PATH="${BASE_PATH}/outputs/${CKPT_TYPE}/${CKPT_NAME}/${TASK}/${SETTING}"
-SAVE_BEST_N_CKPTS=1
+SAVE_BEST_N_CKPTS=3
 # seed
 SEED=10
 
