@@ -84,3 +84,23 @@ test | name: sinst/11_ | {'exact_match': 0.0, 'rougeL': 17.2994} | lm_loss 7.013
 
 
 ============================== EXP at 2025-12-11 05:54:55 ==============================
+
+
+============================== EXP at 2025-12-11 06:24:25 ==============================
+test | name: dialogsum | {'exact_match': 0.0, 'rougeL': 10.0781} | lm_loss nan | avg. gen lenth: 50.626666666666665 | seed 10
+
+
+============================== EXP at 2025-12-11 06:29:01 ==============================
+test | name: dialogsum | {'exact_match': 0.0, 'rougeL': 9.8595} | lm_loss nan | avg. gen lenth: 51.855333333333334 | seed 20
+
+
+============================== EXP at 2025-12-11 06:33:47 ==============================
+test | name: dialogsum | {'exact_match': 0.0, 'rougeL': 10.0793} | lm_loss nan | avg. gen lenth: 51.018 | seed 30
+
+
+============================== EXP at 2025-12-11 06:38:33 ==============================
+test | name: dialogsum | {'exact_match': 0.0, 'rougeL': 9.8644} | lm_loss nan | avg. gen lenth: 50.465333333333334 | seed 40
+
+
+============================== EXP at 2025-12-11 06:43:22 ==============================
+test | name: dialogsum | {'exact_match': 0.0, 'rougeL': 9.9597} | lm_loss nan | avg. gen lenth: 52.29066666666667 | seed 50

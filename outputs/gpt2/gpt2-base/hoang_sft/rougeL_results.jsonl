@@ -18,3 +18,8 @@
 {"dataname": "sinst_11_", "seed": 30, "rougeL": 17.2062}
 {"dataname": "sinst_11_", "seed": 40, "rougeL": 16.8172}
 {"dataname": "sinst_11_", "seed": 50, "rougeL": 17.2994}
+{"dataname": "dialogsum", "seed": 10, "rougeL": 10.0781}
+{"dataname": "dialogsum", "seed": 20, "rougeL": 9.8595}
+{"dataname": "dialogsum", "seed": 30, "rougeL": 10.0793}
+{"dataname": "dialogsum", "seed": 40, "rougeL": 9.8644}
+{"dataname": "dialogsum", "seed": 50, "rougeL": 9.9597}
